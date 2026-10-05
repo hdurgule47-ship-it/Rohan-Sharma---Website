@@ -1,0 +1,1013 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rohan Sharma - Interactive Resume</title>
+    <style>
+        :root {
+            --bg-body: #f8fafc;
+            --bg-card: #ffffff;
+            --bg-header: #1e3a8a;
+            --text-header: #ffffff;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --accent: #2563eb;
+            --accent-hover: #1d4ed8;
+            --border-color: #e2e8f0;
+            --chip-bg: #eff6ff;
+            --chip-text: #1e40af;
+            --chip-border: #bfdbfe;
+            --toast-bg: #0f172a;
+            --toast-text: #ffffff;
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --radius-sm: 6px;
+            --radius-md: 10px;
+            --transition: all 0.25s ease-in-out;
+        }
+
+        [data-theme="dark"] {
+            --bg-body: #0f172a;
+            --bg-card: #1e293b;
+            --bg-header: #0f172a;
+            --text-header: #f8fafc;
+            --text-main: #f1f5f9;
+            --text-muted: #94a3b8;
+            --accent: #3b82f6;
+            --accent-hover: #60a5fa;
+            --border-color: #334155;
+            --chip-bg: #1e3a8a;
+            --chip-text: #dbeafe;
+            --chip-border: #1e40af;
+            --toast-bg: #f8fafc;
+            --toast-text: #0f172a;
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            line-height: 1.6;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            padding-top: 70px;
+            padding-bottom: 40px;
+        }
+
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 60px;
+            background-color: #1e3a8a;
+            border-bottom: 1px solid #1e40af;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 1.5rem;
+            z-index: 1000;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.15);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1rem;
+            overflow-x: auto;
+            white-space: nowrap;
+            padding: 0.5rem 0;
+            scrollbar-width: none;
+        }
+
+        .nav-links::-webkit-scrollbar {
+            display: none;
+        }
+
+        .nav-link {
+            color: #dbeafe;
+            text-decoration: none;
+            font-size: 0.875rem;
+            font-weight: 500;
+            padding: 0.25rem 0.5rem;
+            border-radius: var(--radius-sm);
+            transition: var(--transition);
+        }
+
+        .nav-link:hover {
+            color: #ffffff;
+            background-color: rgba(255, 255, 255, 0.18);
+        }
+
+        .nav-controls {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .theme-toggle-btn,
+        .download-pdf-btn {
+            background: rgba(255, 255, 255, 0.12);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: #ffffff;
+            padding: 0.4rem 0.8rem;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            transition: var(--transition);
+        }
+
+        .theme-toggle-btn:hover,
+        .download-pdf-btn:hover {
+            background: rgba(255, 255, 255, 0.25);
+            border-color: #ffffff;
+            color: #ffffff;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        .hero-card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+            box-shadow: var(--shadow-md);
+            position: relative;
+        }
+
+        .hero-name {
+            font-size: 2.25rem;
+            font-weight: 800;
+            color: var(--text-main);
+            letter-spacing: -0.025em;
+            margin-bottom: 0.25rem;
+            transition: var(--transition);
+            display: inline-block;
+        }
+
+        .hero-name:hover {
+            color: var(--accent);
+            transform: translateX(4px);
+        }
+
+        .hero-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--accent);
+            margin-bottom: 1.25rem;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 0.75rem;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: var(--bg-body);
+            padding: 0.5rem 0.75rem;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border-color);
+            font-size: 0.875rem;
+        }
+
+        .contact-text {
+            color: var(--text-main);
+            font-weight: 500;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .copy-btn {
+            background: var(--chip-bg);
+            color: var(--chip-text);
+            border: 1px solid var(--chip-border);
+            border-radius: var(--radius-sm);
+            padding: 0.2rem 0.5rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            cursor: pointer;
+            margin-left: 0.5rem;
+            transition: var(--transition);
+            flex-shrink: 0;
+        }
+
+        .copy-btn:hover {
+            background: var(--accent);
+            color: #ffffff;
+        }
+
+        .section-card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 1.75rem;
+            margin-bottom: 1.5rem;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1.25rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .section-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text-main);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            transition: var(--transition);
+            display: inline-block;
+            cursor: pointer;
+        }
+
+        .section-title:hover {
+            color: var(--accent);
+            transform: translateX(4px);
+        }
+
+        .summary-text {
+            color: var(--text-main);
+            font-size: 0.975rem;
+            line-height: 1.7;
+        }
+
+        .edu-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .edu-item {
+            display: flex;
+            flex-direction: column;
+            padding: 1rem;
+            background-color: var(--bg-body);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-sm);
+        }
+
+        @media (min-width: 640px) {
+            .edu-item {
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+            }
+        }
+
+        .edu-degree {
+            font-weight: 700;
+            color: var(--text-main);
+            font-size: 1rem;
+        }
+
+        .edu-inst {
+            color: var(--text-muted);
+            font-size: 0.875rem;
+        }
+
+        .edu-meta {
+            margin-top: 0.5rem;
+            display: flex;
+            gap: 0.75rem;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        @media (min-width: 640px) {
+            .edu-meta {
+                margin-top: 0;
+                text-align: right;
+                flex-direction: column;
+                gap: 0.25rem;
+            }
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 0.2rem 0.6rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            background-color: var(--chip-bg);
+            color: var(--chip-text);
+            border: 1px solid var(--chip-border);
+            width: fit-content;
+        }
+
+        .accordion-controls {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .action-btn {
+            background-color: var(--bg-body);
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            padding: 0.25rem 0.6rem;
+            border-radius: var(--radius-sm);
+            font-size: 0.75rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .action-btn:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        .accordion-item {
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-sm);
+            margin-bottom: 0.75rem;
+            overflow: hidden;
+            background-color: var(--bg-card);
+        }
+
+        .accordion-header {
+            padding: 1rem;
+            background-color: var(--bg-body);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            user-select: none;
+            transition: var(--transition);
+        }
+
+        .accordion-header:hover {
+            background-color: var(--chip-bg);
+        }
+
+        .accordion-title-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .accordion-title {
+            font-weight: 700;
+            font-size: 1rem;
+            color: var(--text-main);
+            transition: var(--transition);
+        }
+
+        .accordion-header:hover .accordion-title {
+            color: var(--accent);
+        }
+
+        .accordion-subtitle {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .accordion-icon {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--accent);
+            transition: transform 0.25s ease;
+        }
+
+        .accordion-item.active .accordion-icon {
+            transform: rotate(180deg);
+        }
+
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out, padding 0.3s ease;
+            padding: 0 1rem;
+            background-color: var(--bg-card);
+        }
+
+        .accordion-item.active .accordion-content {
+            max-height: 1000px;
+            padding: 1rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .bullet-list {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        .bullet-list li {
+            position: relative;
+            padding-left: 1.25rem;
+            margin-bottom: 0.6rem;
+            font-size: 0.925rem;
+            color: var(--text-main);
+            line-height: 1.5;
+        }
+
+        .bullet-list li::before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+
+        .search-box {
+            width: 100%;
+            padding: 0.6rem 1rem;
+            margin-bottom: 1.25rem;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-sm);
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            font-size: 0.9rem;
+            outline: none;
+            transition: var(--transition);
+        }
+
+        .search-box:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.2);
+        }
+
+        .skills-group {
+            margin-bottom: 1.25rem;
+        }
+
+        .skills-group-title {
+            font-size: 0.875rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.5rem;
+            transition: var(--transition);
+            display: inline-block;
+        }
+
+        .skills-group-title:hover {
+            color: var(--accent);
+            transform: translateX(3px);
+        }
+
+        .tags-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .skill-tag {
+            background-color: var(--chip-bg);
+            color: var(--chip-text);
+            border: 1px solid var(--chip-border);
+            padding: 0.35rem 0.75rem;
+            border-radius: var(--radius-sm);
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+
+        .skill-tag.hidden {
+            display: none;
+        }
+
+        .no-results {
+            display: none;
+            color: var(--text-muted);
+            font-size: 0.875rem;
+            font-style: italic;
+            text-align: center;
+            padding: 1rem;
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: var(--toast-bg);
+            color: var(--toast-text);
+            padding: 0.75rem 1.25rem;
+            border-radius: var(--radius-sm);
+            font-size: 0.875rem;
+            font-weight: 600;
+            box-shadow: var(--shadow-md);
+            opacity: 0;
+            transform: translateY(10px);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            pointer-events: none;
+            z-index: 2000;
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @media print {
+            body {
+                padding-top: 0 !important;
+                background-color: #ffffff !important;
+                color: #000000 !important;
+            }
+            .navbar, .copy-btn, .accordion-controls, .search-box, .theme-toggle-btn, .download-pdf-btn {
+                display: none !important;
+            }
+            .hero-card, .section-card {
+                box-shadow: none !important;
+                border: 1px solid #cbd5e1 !important;
+                background-color: #ffffff !important;
+                page-break-inside: avoid;
+            }
+            .accordion-content {
+                max-height: none !important;
+                padding: 1rem !important;
+                display: block !important;
+            }
+            .accordion-icon {
+                display: none !important;
+            }
+            .skill-tag {
+                border: 1px solid #cbd5e1 !important;
+                background-color: #f1f5f9 !important;
+                color: #000000 !important;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="navbar">
+        <nav class="nav-links">
+            <a href="#summary" class="nav-link">Summary</a>
+            <a href="#education" class="nav-link">Education</a>
+            <a href="#experience" class="nav-link">Experience</a>
+            <a href="#bank-audit" class="nav-link">Bank Audit</a>
+            <a href="#skills" class="nav-link">Skills</a>
+            <a href="#certifications" class="nav-link">Certifications</a>
+            <a href="#personal" class="nav-link">Personal Details</a>
+        </nav>
+        <div class="nav-controls">
+            <button class="theme-toggle-btn" id="themeToggleBtn" aria-label="Toggle Theme">
+                <span id="themeIcon">🌙</span>
+                <span id="themeText">Dark</span>
+            </button>
+            <button class="download-pdf-btn" id="downloadPdfBtn" onclick="downloadPDF()" aria-label="Download PDF">
+                <span>📥</span>
+                <span>Download PDF</span>
+            </button>
+        </div>
+    </header>
+
+    <main class="container">
+        
+        <section class="hero-card" id="summary">
+            <h1 class="hero-name">ROHAN SHARMA</h1>
+            <div class="hero-title">Chartered Accountant | Bank Audit | Statutory Audit | Financial Reporting</div>
+            
+            <p class="summary-text">
+                Recently qualified Chartered Accountant who cleared the CA Final Examination in May 2026, with practical exposure to bank/branch audits, statutory audit, accounting, taxation and financial reporting. Hands-on experience in audit testing, verification of advances and deposits, NPA review, reconciliations, audit documentation and Excel-based analysis. Detail-oriented, analytical and comfortable working with financial data, audit teams and client/branch personnel.
+            </p>
+
+            <div class="contact-grid">
+                <div class="contact-item">
+                    <span class="contact-text">Nashik, Maharashtra</span>
+                </div>
+                <div class="contact-item">
+                    <span class="contact-text" id="phoneText">+91 98765 43210</span>
+                    <button class="copy-btn" onclick="copyToClipboard('+91 98765 43210', 'Phone number')">Copy</button>
+                </div>
+                <div class="contact-item">
+                    <span class="contact-text" id="emailText">rohan.sharma.ca@gmail.com</span>
+                    <button class="copy-btn" onclick="copyToClipboard('rohan.sharma.ca@gmail.com', 'Email address')">Copy</button>
+                </div>
+                <div class="contact-item">
+                    <span class="contact-text">linkedin.com/in/rohansharma-ca</span>
+                    <button class="copy-btn" onclick="copyToClipboard('linkedin.com/in/rohansharma-ca', 'LinkedIn URL')">Copy</button>
+                </div>
+            </div>
+        </section>
+
+        <section class="section-card" id="education">
+            <div class="section-header">
+                <h2 class="section-title">Professional Qualification & Education</h2>
+            </div>
+            <div class="edu-grid">
+                <div class="edu-item">
+                    <div>
+                        <div class="edu-degree">Chartered Accountant (CA)</div>
+                        <div class="edu-inst">The Institute of Chartered Accountants of India (ICAI)</div>
+                    </div>
+                    <div class="edu-meta">
+                        <span class="badge">Qualified - May 2026</span>
+                        <span>2026</span>
+                    </div>
+                </div>
+                <div class="edu-item">
+                    <div>
+                        <div class="edu-degree">CA Intermediate</div>
+                        <div class="edu-inst">The Institute of Chartered Accountants of India (ICAI)</div>
+                    </div>
+                    <div class="edu-meta">
+                        <span class="badge">Passed</span>
+                        <span>2024</span>
+                    </div>
+                </div>
+                <div class="edu-item">
+                    <div>
+                        <div class="edu-degree">CA Foundation</div>
+                        <div class="edu-inst">The Institute of Chartered Accountants of India (ICAI)</div>
+                    </div>
+                    <div class="edu-meta">
+                        <span class="badge">Passed</span>
+                        <span>2022</span>
+                    </div>
+                </div>
+                <div class="edu-item">
+                    <div>
+                        <div class="edu-degree">B.Com</div>
+                        <div class="edu-inst">Savitribai Phule Pune University</div>
+                    </div>
+                    <div class="edu-meta">
+                        <span class="badge">First Class</span>
+                        <span>2022</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section-card" id="experience">
+            <div class="section-header">
+                <h2 class="section-title">Professional Experience</h2>
+                <div class="accordion-controls">
+                    <button class="action-btn" onclick="toggleAllAccordions('exp-accordion', true)">Expand All</button>
+                    <button class="action-btn" onclick="toggleAllAccordions('exp-accordion', false)">Collapse All</button>
+                </div>
+            </div>
+
+            <div class="accordion-item exp-accordion active">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <div class="accordion-title-group">
+                        <div class="accordion-title">ABC & Co., Chartered Accountants - Nashik</div>
+                        <div class="accordion-subtitle">Article Assistant / Audit Trainee | April 2023 - March 2026</div>
+                    </div>
+                    <span class="accordion-icon">▾</span>
+                </div>
+                <div class="accordion-content">
+                    <ul class="bullet-list">
+                        <li>Assisted in statutory and branch audits of banks, performing audit procedures in accordance with applicable RBI and auditing requirements.</li>
+                        <li>Verified cash balances, deposits, advances, interest income, interest expense, branch expenses and other major balance sheet and profit & loss items.</li>
+                        <li>Reviewed loan and advance documentation, sanction terms, security documents, repayment records and overdue accounts.</li>
+                        <li>Assisted in checking NPA identification, asset classification, income recognition and provisioning under applicable IRACP norms.</li>
+                        <li>Performed testing of KYC documentation, account-opening records and selected customer/transaction documentation.</li>
+                        <li>Checked inter-branch transactions, suspense accounts, reconciliation items and other exception reports.</li>
+                        <li>Performed vouching, ledger scrutiny, balance-sheet verification and substantive audit procedures for corporate and other clients.</li>
+                        <li>Prepared audit working papers, supporting schedules, reconciliations and summaries of audit observations.</li>
+                        <li>Used MS Excel for data analysis, sampling, reconciliations, exception identification and preparation of audit schedules.</li>
+                        <li>Assisted with GST and Income Tax compliance work and preparation of financial statements and related schedules.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section class="section-card" id="bank-audit">
+            <div class="section-header">
+                <h2 class="section-title">Bank Audit Exposure</h2>
+                <div class="accordion-controls">
+                    <button class="action-btn" onclick="toggleAllAccordions('bank-accordion', true)">Expand All</button>
+                    <button class="action-btn" onclick="toggleAllAccordions('bank-accordion', false)">Collapse All</button>
+                </div>
+            </div>
+
+            <div class="accordion-item bank-accordion active">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <div class="accordion-title-group">
+                        <div class="accordion-title">Advances</div>
+                    </div>
+                    <span class="accordion-icon">▾</span>
+                </div>
+                <div class="accordion-content">
+                    <p class="summary-text">Loan documentation, sanction terms, overdue accounts, NPA identification, asset classification and provisioning.</p>
+                </div>
+            </div>
+
+            <div class="accordion-item bank-accordion active">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <div class="accordion-title-group">
+                        <div class="accordion-title">Deposits</div>
+                    </div>
+                    <span class="accordion-icon">▾</span>
+                </div>
+                <div class="accordion-content">
+                    <p class="summary-text">Verification of deposit accounts, interest calculations and supporting documentation.</p>
+                </div>
+            </div>
+
+            <div class="accordion-item bank-accordion active">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <div class="accordion-title-group">
+                        <div class="accordion-title">Income & Expenses</div>
+                    </div>
+                    <span class="accordion-icon">▾</span>
+                </div>
+                <div class="accordion-content">
+                    <p class="summary-text">Verification of interest income, interest expense, branch expenses and other income.</p>
+                </div>
+            </div>
+
+            <div class="accordion-item bank-accordion active">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <div class="accordion-title-group">
+                        <div class="accordion-title">Reconciliations</div>
+                    </div>
+                    <span class="accordion-icon">▾</span>
+                </div>
+                <div class="accordion-content">
+                    <p class="summary-text">Inter-branch accounts, suspense accounts, bank reconciliations and outstanding items.</p>
+                </div>
+            </div>
+
+            <div class="accordion-item bank-accordion active">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <div class="accordion-title-group">
+                        <div class="accordion-title">Compliance</div>
+                    </div>
+                    <span class="accordion-icon">▾</span>
+                </div>
+                <div class="accordion-content">
+                    <p class="summary-text">KYC checks, internal controls, regulatory requirements and audit observations.</p>
+                </div>
+            </div>
+
+            <div class="accordion-item bank-accordion active">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <div class="accordion-title-group">
+                        <div class="accordion-title">Documentation</div>
+                    </div>
+                    <span class="accordion-icon">▾</span>
+                </div>
+                <div class="accordion-content">
+                    <p class="summary-text">Audit checklists, working papers, supporting evidence and reporting of exceptions.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="section-card" id="skills">
+            <div class="section-header">
+                <h2 class="section-title">Technical Skills & Core Competencies</h2>
+            </div>
+
+            <input type="text" id="skillsSearch" class="search-box" placeholder="Type to filter skills and competencies..." onkeyup="filterSkills()">
+
+            <div id="noSkillsFound" class="no-results">No matching skills found.</div>
+
+            <div class="skills-group">
+                <div class="skills-group-title">Audit</div>
+                <div class="tags-container">
+                    <span class="skill-tag">Bank Audit</span>
+                    <span class="skill-tag">Branch Audit</span>
+                    <span class="skill-tag">Statutory Audit</span>
+                    <span class="skill-tag">Internal Audit</span>
+                    <span class="skill-tag">Vouching & Verification</span>
+                </div>
+            </div>
+
+            <div class="skills-group">
+                <div class="skills-group-title">Accounting</div>
+                <div class="tags-container">
+                    <span class="skill-tag">Financial Statements</span>
+                    <span class="skill-tag">Ledger Scrutiny</span>
+                    <span class="skill-tag">Reconciliations</span>
+                    <span class="skill-tag">Tally Prime</span>
+                </div>
+            </div>
+
+            <div class="skills-group">
+                <div class="skills-group-title">Taxation</div>
+                <div class="tags-container">
+                    <span class="skill-tag">GST</span>
+                    <span class="skill-tag">Income Tax</span>
+                    <span class="skill-tag">Tax Audit Support</span>
+                </div>
+            </div>
+
+            <div class="skills-group">
+                <div class="skills-group-title">Tools</div>
+                <div class="tags-container">
+                    <span class="skill-tag">MS Excel (Pivot Tables, XLOOKUP/VLOOKUP, SUMIFS, IF, Conditional Formatting)</span>
+                    <span class="skill-tag">MS Word</span>
+                    <span class="skill-tag">PowerPoint</span>
+                </div>
+            </div>
+
+            <div class="skills-group">
+                <div class="skills-group-title">Core Competencies</div>
+                <div class="tags-container">
+                    <span class="skill-tag">Analytical Thinking</span>
+                    <span class="skill-tag">Attention to Detail</span>
+                    <span class="skill-tag">Audit Documentation</span>
+                    <span class="skill-tag">Financial Analysis</span>
+                    <span class="skill-tag">Problem Solving</span>
+                    <span class="skill-tag">Teamwork</span>
+                    <span class="skill-tag">Client Communication</span>
+                    <span class="skill-tag">Time Management</span>
+                </div>
+            </div>
+        </section>
+
+        <section class="section-card" id="certifications">
+            <div class="section-header">
+                <h2 class="section-title">Certifications & Achievements</h2>
+            </div>
+            <ul class="bullet-list">
+                <li>Qualified Chartered Accountant - ICAI, May 2026.</li>
+                <li>Completed practical training with significant exposure to bank/branch audit assignments.</li>
+                <li>Strong working knowledge of Excel-based audit analysis and reconciliation.</li>
+            </ul>
+        </section>
+
+        <section class="section-card" id="personal">
+            <div class="section-header">
+                <h2 class="section-title">Personal Details</h2>
+            </div>
+            <div class="bullet-list" style="margin-bottom: 1.25rem;">
+                <li style="list-style: none; padding-left: 0;"><strong>Date of Birth:</strong> 15 August 2000</li>
+                <li style="list-style: none; padding-left: 0;"><strong>Languages:</strong> English, Hindi, Marathi</li>
+                <li style="list-style: none; padding-left: 0;"><strong>Location:</strong> Nashik, Maharashtra</li>
+                <li style="list-style: none; padding-left: 0;"><strong>Availability:</strong> Immediate</li>
+            </div>
+            <div style="border-top: 1px solid var(--border-color); padding-top: 1rem; font-size: 0.875rem; color: var(--text-muted); font-style: italic;">
+                "I hereby declare that the information provided above is true and correct to the best of my knowledge and belief." — <strong>ROHAN SHARMA</strong>
+            </div>
+        </section>
+
+    </main>
+
+    <div id="toast" class="toast">Copied to clipboard!</div>
+
+    <script>
+        const themeToggleBtn = document.getElementById('themeToggleBtn');
+        const themeIcon = document.getElementById('themeIcon');
+        const themeText = document.getElementById('themeText');
+
+        function setTheme(theme) {
+            document.documentElement.setAttribute('data-theme', theme);
+            if (theme === 'dark') {
+                themeIcon.textContent = '☀️';
+                themeText.textContent = 'Light';
+            } else {
+                themeIcon.textContent = '🌙';
+                themeText.textContent = 'Dark';
+            }
+        }
+
+        themeToggleBtn.addEventListener('click', () => {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            setTheme(newTheme);
+        });
+
+        function copyToClipboard(text, label) {
+            const tempInput = document.createElement('input');
+            tempInput.value = text;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            document.execCommand('copy');
+            document.body.removeChild(tempInput);
+
+            showToast(`${label} copied to clipboard!`);
+        }
+
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        function toggleAccordion(header) {
+            const item = header.parentElement;
+            item.classList.toggle('active');
+        }
+
+        function toggleAllAccordions(className, expand) {
+            const items = document.querySelectorAll(`.${className}`);
+            items.forEach(item => {
+                if (expand) {
+                    item.classList.add('active');
+                } else {
+                    item.classList.remove('active');
+                }
+            });
+        }
+
+        function filterSkills() {
+            const input = document.getElementById('skillsSearch').value.toLowerCase().trim();
+            const tags = document.querySelectorAll('.skill-tag');
+            const groups = document.querySelectorAll('.skills-group');
+            let totalVisible = 0;
+
+            tags.forEach(tag => {
+                const text = tag.textContent.toLowerCase();
+                if (text.includes(input)) {
+                    tag.classList.remove('hidden');
+                    totalVisible++;
+                } else {
+                    tag.classList.add('hidden');
+                }
+            });
+
+            groups.forEach(group => {
+                const visibleTagsInGroup = group.querySelectorAll('.skill-tag:not(.hidden)');
+                if (visibleTagsInGroup.length === 0) {
+                    group.style.display = 'none';
+                } else {
+                    group.style.display = 'block';
+                }
+            });
+
+            const noResultsMsg = document.getElementById('noSkillsFound');
+            if (totalVisible === 0) {
+                noResultsMsg.style.display = 'block';
+            } else {
+                noResultsMsg.style.display = 'none';
+            }
+        }
+
+        function downloadPDF() {
+            // 1. Expand all accordions so full experience details appear in the PDF
+            toggleAllAccordions('exp-accordion', true);
+            toggleAllAccordions('bank-accordion', true);
+
+            showToast("Opening print menu... Select 'Save as PDF' as your Destination.");
+
+            // 2. Attempt native window print
+            setTimeout(() => {
+                try {
+                    window.print();
+                } catch (err) {
+                    // 3. Fallback for restricted iframe or preview sandboxes: open clean pop-up window to trigger print
+                    openPrintFallback();
+                }
+            }, 300);
+        }
+
+        function openPrintFallback() {
+            const printWin = window.open('', '_blank');
+            if (!printWin) {
+                showToast("Pop-up blocked. Please enable pop-ups or press Ctrl+P (Cmd+P) to Save as PDF.");
+                return;
+            }
+
+            const htmlContent = `
+                <!DOCTYPE html>
+                <html>
+                <head>
+                    <title>Rohan Sharma - Resume PDF</title>
+                    ${document.querySelector('head').innerHTML}
+                </head>
+                <body onload="window.print(); window.close();">
+                    ${document.body.innerHTML}
+                </body>
+                </html>
+            `;
+
+            printWin.document.open();
+            printWin.document.write(htmlContent);
+            printWin.document.close();
+        }
+
+        // Auto-expand sections prior to print keyboard shortcut (Ctrl+P / Cmd+P)
+        window.addEventListener('beforeprint', () => {
+            toggleAllAccordions('exp-accordion', true);
+            toggleAllAccordions('bank-accordion', true);
+        });
+    </script>
+</body>
+</html>
